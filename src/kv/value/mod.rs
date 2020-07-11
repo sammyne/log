@@ -4,11 +4,11 @@ mod fill;
 mod impls;
 mod internal;
 
-#[cfg(test)]
-pub(in kv) mod test;
+#[cfg(feature = "with-testing")]
+pub(in crate::kv) mod test;
 
 pub use self::fill::{Fill, Slot};
-pub use kv::Error;
+pub use crate::kv::Error;
 
 use self::internal::{Inner, Primitive, Visitor};
 

@@ -90,7 +90,7 @@ impl<'v> sval::Value for kv::Value<'v> {
     }
 }
 
-pub(in kv::value) use self::sval::Value;
+pub(in crate::kv::value) use self::sval::Value;
 
 pub(super) fn fmt(f: &mut fmt::Formatter, v: &dyn sval::Value) -> Result<(), Error> {
     sval::fmt::debug(f, v)?;
@@ -149,8 +149,11 @@ impl Error {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     use super::*;
     use kv::value::test::Token;
 
@@ -159,13 +162,14 @@ mod tests {
         assert_eq!(kv::Value::from_sval(&42u64).to_token(), Token::Sval);
     }
 
-    #[test]
-    fn test_sval_structured() {
-        let value = kv::Value::from(42u64);
-        let expected = vec![sval::test::Token::Unsigned(42)];
+    // @note: comment out by sammyne due to missing porting sval
+    //#[test]
+    //fn test_sval_structured() {
+    //    let value = kv::Value::from(42u64);
+    //    let expected = vec![sval::test::Token::Unsigned(42)];
 
-        assert_eq!(sval::test::tokens(value), expected);
-    }
+    //    assert_eq!(sval::test::tokens(value), expected);
+    //}
 
     #[test]
     fn sval_cast() {

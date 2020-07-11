@@ -1,6 +1,6 @@
 //! Sources for key-value pairs.
 
-use kv::{Error, Key, ToKey, ToValue, Value};
+use crate::kv::{Error, Key, ToKey, ToValue, Value};
 use std::fmt;
 
 /// A source of key-value pairs.
@@ -197,6 +197,8 @@ impl<'a, 'b: 'a, 'kvs> Visitor<'kvs> for fmt::DebugTuple<'a, 'b> {
 
 #[cfg(feature = "std")]
 mod std_support {
+    use ::std::prelude::v1::*;
+
     use super::*;
     use std::borrow::Borrow;
     use std::collections::{BTreeMap, HashMap};
@@ -288,10 +290,13 @@ mod std_support {
         }
     }
 
-    #[cfg(test)]
+    #[cfg(feature = "with-testing")]
     mod tests {
+        use ::std::prelude::v1::*;
+        use testing::test;
+
         use super::*;
-        use kv::value::test::Token;
+        use crate::kv::value::test::Token;
         use std::collections::{BTreeMap, HashMap};
 
         #[test]
@@ -340,10 +345,13 @@ mod std_support {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     use super::*;
-    use kv::value::test::Token;
+    use crate::kv::value::test::Token;
 
     #[test]
     fn source_is_object_safe() {

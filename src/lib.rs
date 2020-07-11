@@ -270,11 +270,19 @@
 )]
 #![warn(missing_docs)]
 #![deny(missing_debug_implementations)]
-#![cfg_attr(all(not(feature = "std"), not(test)), no_std)]
+//#![cfg_attr(all(not(feature = "std"), not(test)), no_std)]
+#![no_std]
 // When compiled for the rustc compiler itself we want to make sure that this is
 // an unstable crate
 #![cfg_attr(rustbuild, feature(staged_api, rustc_private))]
 #![cfg_attr(rustbuild, unstable(feature = "rustc_private", issue = "27812"))]
+
+#[cfg(feature = "std")]
+#[macro_use]
+extern crate sgx_tstd as std;
+
+#[cfg(feature = "std")]
+use std::prelude::v1::*;
 
 #[cfg(all(not(feature = "std"), not(test)))]
 extern crate core as std;
@@ -1447,11 +1455,17 @@ cfg_if! {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    extern crate std;
+#[cfg(feature = "with-testing")]
+pub mod tests {
+    extern crate sgx_tstd as std;
+
+    use ::std::prelude::v1::*;
+    use testing::{generate_runner, test};
+
+    generate_runner!();
+
     use super::{Level, LevelFilter, ParseLevelError};
-    use tests::std::string::ToString;
+    use crate::tests::std::string::ToString;
 
     #[test]
     fn test_levelfilter_from_str() {
@@ -1631,7 +1645,7 @@ mod tests {
     #[cfg(feature = "kv_unstable")]
     fn test_record_key_values_builder() {
         use super::Record;
-        use kv::{self, Visitor};
+        use crate::kv::{self, Visitor};
 
         struct TestVisitor {
             seen_pairs: usize,

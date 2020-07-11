@@ -111,6 +111,8 @@ impl<'k> From<&'k str> for Key<'k> {
 
 #[cfg(feature = "std")]
 mod std_support {
+    use ::std::prelude::v1::*;
+
     use super::*;
 
     use std::borrow::Cow;
@@ -128,8 +130,11 @@ mod std_support {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     use super::*;
 
     #[test]

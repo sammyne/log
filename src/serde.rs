@@ -7,7 +7,7 @@ use self::serde::de::{
 };
 use self::serde::ser::{Serialize, Serializer};
 
-use {Level, LevelFilter, LOG_LEVEL_NAMES};
+use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
 
 use std::fmt;
 use std::str::{self, FromStr};
@@ -181,12 +181,15 @@ impl<'de> Deserialize<'de> for LevelFilter {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     extern crate serde_test;
     use self::serde_test::{assert_de_tokens, assert_de_tokens_error, assert_tokens, Token};
 
-    use {Level, LevelFilter};
+    use crate::{Level, LevelFilter};
 
     fn level_token(variant: &'static str) -> Token {
         Token::UnitVariant {

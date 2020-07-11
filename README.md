@@ -8,6 +8,8 @@ A Rust library providing a lightweight logging *facade*.
 [![Documentation](https://docs.rs/log/badge.svg)](https://docs.rs/log)
 ![License](https://img.shields.io/crates/l/log.svg)
 
+![rsgx](https://github.com/sammyne/log-rs/workflows/rsgx/badge.svg?branch=rsgx1.1.2)
+
 * [`log` documentation](https://docs.rs/log)
 
 A logging facade provides a single logging API that abstracts over the actual

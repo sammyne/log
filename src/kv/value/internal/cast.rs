@@ -215,6 +215,8 @@ impl<'v> Inner<'v> {
 
             #[cfg(feature = "std")]
             fn str(&mut self, v: &str) -> Result<(), Error> {
+                use std::prelude::v1::*;
+
                 self.0 = Cast::String(v.into());
                 Ok(())
             }
@@ -255,7 +257,7 @@ impl<'v> Inner<'v> {
 pub(super) enum Cast<'v> {
     Primitive(Primitive<'v>),
     #[cfg(feature = "std")]
-    String(String),
+    String(std::string::String),
 }
 
 impl<'v> Cast<'v> {
@@ -399,8 +401,11 @@ mod std_support {
         }
     }
 
-    #[cfg(test)]
+    #[cfg(feature = "with-testing")]
     mod tests {
+        use ::std::prelude::v1::*;
+        use testing::test;
+
         use crate::kv::ToValue;
 
         #[test]
@@ -429,8 +434,11 @@ mod std_support {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     use crate::kv::ToValue;
 
     #[test]

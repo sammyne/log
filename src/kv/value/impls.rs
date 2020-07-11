@@ -89,6 +89,8 @@ impl_into_owned! [
 
 #[cfg(feature = "std")]
 mod std_support {
+    use ::std::prelude::v1::*;
+
     use super::*;
 
     use std::borrow::Cow;
@@ -115,10 +117,13 @@ mod std_support {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     use super::*;
-    use kv::value::test::Token;
+    use crate::kv::value::test::Token;
 
     #[test]
     fn test_to_value_display() {

@@ -1,5 +1,7 @@
 // Test support for inspecting Values
 
+use std::prelude::v1::*;
+
 use std::fmt;
 use std::str;
 
@@ -7,7 +9,7 @@ use super::internal;
 use super::{Error, Value};
 
 #[derive(Debug, PartialEq)]
-pub(in kv) enum Token {
+pub(in crate::kv) enum Token {
     U64(u64),
     I64(i64),
     F64(f64),
@@ -20,9 +22,9 @@ pub(in kv) enum Token {
     Sval,
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 impl<'v> Value<'v> {
-    pub(in kv) fn to_token(&self) -> Token {
+    pub(in crate::kv) fn to_token(&self) -> Token {
         struct TestVisitor(Option<Token>);
 
         impl<'v> internal::Visitor<'v> for TestVisitor {

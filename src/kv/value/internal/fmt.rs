@@ -61,7 +61,7 @@ impl<'s, 'f> Slot<'s, 'f> {
     }
 }
 
-pub(in kv::value) use self::fmt::{Arguments, Debug, Display};
+pub(in crate::kv::value) use self::fmt::{Arguments, Debug, Display};
 
 impl<'v> fmt::Debug for kv::Value<'v> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -201,8 +201,11 @@ impl<'v> fmt::Display for kv::Value<'v> {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     use super::*;
 
     use crate::kv::value::ToValue;

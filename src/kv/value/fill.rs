@@ -1,5 +1,7 @@
 //! Lazy value initialization.
 
+use std::prelude::v1::*;
+
 use std::fmt;
 
 use super::internal::{Erased, Inner, Visitor};
@@ -81,8 +83,11 @@ impl<'s, 'f> Slot<'s, 'f> {
     }
 }
 
-#[cfg(test)]
+#[cfg(feature = "with-testing")]
 mod tests {
+    use ::std::prelude::v1::*;
+    use testing::test;
+
     use super::*;
 
     #[test]
